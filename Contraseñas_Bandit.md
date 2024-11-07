@@ -99,8 +99,97 @@ SOLUCIÓN:  En este caso, simplemente debemos hacer un `strings data.txt | grep 
 ## LEVEL 10:
 Conexión con ssh a bandit10@bandit.labs.overthewire.org -p 2220
 Usar la contraseña del nivel 9
+
 PROBLEMA: La contraseña está en data.txt que usa datos codificados en base64
 
-SOLUCION:
+SOLUCION: Abrimos el archivo .txt, tomamos su contenido y usamos una herramiento para decodificarlo. En mi caso he usado cyberchef, pero también se puede usar hydra.
 
-**CONTRASEÑA OBTENIDA:**
+**CONTRASEÑA OBTENIDA: dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr**
+
+## LEVEL 11:
+Conexión con ssh a bandit11@bandit.labs.overthewire.org -p 2220
+Usar la contraseña del nivel 10
+
+PROBLEMA: La contraseña está en un archivo donde todas las letras han rotado 13 posiciones.
+
+SOLUCION: Al igual que en el ejercicio anterior, tenemos un .txt codificad, esta vez, con ROT13 o cifrado cesar. Para dehacerlo podemos simplemente descrifrarlo en programas como cyberchef o podemos hacer uso de la función "tr", quedando algo así: 
+```bash
+cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+```
+**CONTRASEÑA OBTENIDA: 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4**
+
+## LEVEL 12:
+Conexión con ssh a bandit12@bandit.labs.overthewire.org -p 2220
+Usar la contraseña del nivel 11
+
+PROBLEMA: La contraseña está dentro de un .txt en forma de un hexdump que ha sido comprimido
+varias veces por distintos metodos de compresión.
+
+SOLUCION: Primero debemos convertir el hexdump de vuelta a los datos comprimidos, así que para ello usamos el comando "xxd" dejando algo así:
+
+```bash
+ xxd -r ~/data.txt datosdeshexados.txt
+```
+
+A continuación debemos empezar a desempaquetar los datos originales, para eso debemos descubrir que tipo de compresión lleva en cada parte, para eso debemos hacer un cat de los datos y fijarnos en los primeros bytes en el hexdump, utilizando una lista externa que nos ayude a identificarlo ( yo he usado esta: https://en.wikipedia.org/wiki/List_of_file_signatures ) y hemos ido descomprimiendo por pasos. El primer tipo de compresión es un gzip. Cambiamos el tipo de archivo de ".txt" a ".gzip" y descomprimimos.
+
+```bash
+mv datosdeshexados.txt datosdeshexados.gz
+gzip -d datosdeshexados.gz
+```
+
+Para proseguir, tenemos que convertir estos datos de nuevo al hexdump y descubriremos que la proxima compresión fue hecha con BZIP2, una vez sabemos esto, solo repetimos el anterior proceso.
+
+```bash
+xxd datosdeshexados 
+mv datosdeshexados datosdeshexados.bz2
+bzip2 -d datosdeshexados.bz2
+```
+
+Y repetimos una vez más la misma operación con GZIP.
+
+```bash
+xxd datosdeshexados 
+mv datosdeshexados datosdeshexados.gz
+gzip -d datosdeshexados.gz
+```
+
+Al volver a realizar lo mismo una vez más, en el hexdump podemos ver que este archivo parece ser un archivo TAR porque contiene metadatos que son típicos de este formato. El encabezado muestra información como el nombre del archivo (data5.bin), los permisos del archivo (0644), el tamaño (0), y posibles marcas de tiempo, que son características comunes en los archivos TAR, así que a continuación extraemos el archivo
+
+```bash
+xxd datosdeshexados | head
+mv datosdeshexados datosdeshexados.tar
+tar -xf datosdeshexados.tar
+```
+Y al realizar lo mismo con este archivo nuevo, podemo ver que contiene otro archivo en su interior para extraer con TAR.
+```bash
+xxd data5.bin | head
+tar -xf data5.bin
+```
+
+A continuación, comprobamos el hexdump del nuevo archivo y vemos que está comprimido con BZIP2 de nuevo, así que volvemos a descomprimirlo.
+```bash
+xxd data6.bin | head
+bzip2 -d data6.bin
+bzip2: Can't guess original name for data6.bin -- using data6.bin.out
+```
+En este hexdump volvemos a encontrar un archivo dentro, así que volvemos a usar TAR para extraerlo.
+```bash
+xxd data6.bin.out | head
+tar -xf data6.bin.out
+```
+Y finalmente realizamos una última comprobación para ver que el archivo está comprimido con GZIP, así que hacemos una última descompresión y finalmente comprobamos con "cat" el contenido del último archivo para encontrar la contraseña.
+
+```bash
+xxd data8.bin
+mv data8.bin data8.gz
+gzip -d data8.gz
+cat data8.bin
+```
+**CONTRASEÑA OBTENIDA: FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn**
+
+## LEVEL 13:
+Conexión con ssh a bandit13@bandit.labs.overthewire.org -p 2220
+Usar la contraseña del nivel 12
+
+PROBLEMA:
