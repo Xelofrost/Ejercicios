@@ -194,14 +194,14 @@ Usar la contraseña del nivel 12
 
 PROBLEMA: La contraseña está guardada en /etc/bandit_pass/bandit14 y solo se puede leer desde el usuario bandit14. En este nivel no habrá contraseña, pero sí una sshkey para conectarse al siguiente nivel.
 
-SOLUCIÓN: Comprobamos que ls sshkey.private está dentro con un ls. Tras eso, podemo cerrar la conexión ssh y utilizar un scp para quedarnos con la llave ssh.
+SOLUCIÓN: Comprobamos que ls sshkey está dentro con un ls. Tras eso, podemo cerrar la conexión ssh y utilizar un scp para quedarnos con la llave ssh.
 ```bash
 scp -P 2220 bandit13@bandit.labs.overthewire.org:sshkey.private .
 ```
 
 Tras eso trato de conectarme con la key, pero puedo ver que no me lo permite porque tiene demasiados permisos, así que lo reduzco con "chmod 700" para que solo yo pueda abrirlo y entonces sí me lo permite.
 ```bash
-chmod 700 sshkey.private 
+chmod 700 "sshkey.private"
 ssh -i sshkey.private bandit14@bandit.labs.overthewire.org -p 2220
 ```
 **CONTRASEÑA OBTENIDA: MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS**
