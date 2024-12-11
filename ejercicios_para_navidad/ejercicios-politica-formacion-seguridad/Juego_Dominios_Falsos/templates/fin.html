@@ -1,0 +1,31 @@
+<!-- fin.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Ciberseguridad - Fin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <h2>Fin del juego</h2>
+    <p>Has acertado {{ puntaje.aciertos }} veces y fallado {{ puntaje.fallos }} veces.</p>
+
+    {% if dominios_incorrectos %}
+        <h3>Dominios en los que te equivocaste:</h3>
+        <ul>
+            {% for dominio in dominios_incorrectos %}
+                <li>{{ dominio }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No cometiste errores. ¡Excelente!</p>
+    {% endif %}
+
+    <!-- Formulario para reiniciar el juego -->
+    <form action="{{ url_for('reiniciar') }}" method="POST">
+        <button type="submit" class="btn-reiniciar">Reiniciar juego</button>
+    </form>
+
+</body>
+</html>

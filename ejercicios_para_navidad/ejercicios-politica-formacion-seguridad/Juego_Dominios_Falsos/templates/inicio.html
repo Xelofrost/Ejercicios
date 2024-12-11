@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Ciberseguridad</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+
+    <!-- Contenedor principal centrado -->
+    <div class="main-container">
+        <div class="header">
+            <h1>Bienvenido al Juego de Ciberseguridad</h1>
+            <p class="subtitle">¡Pon a prueba tus habilidades y aprende a identificar dominios falsos!</p>
+        </div>
+
+        <!-- Descripción del juego -->
+        <div class="game-description">
+            <p>
+                En este juego, tu misión será identificar cuál de los dominios mostrados es legítimo y cuál es falso. 
+                A medida que avanzas, los niveles serán más difíciles. ¡No te dejes engañar!
+            </p>
+        </div>
+
+        <!-- Botón para iniciar el juego -->
+        <div class="start-button">
+            <a href="{{ url_for('juego', ronda=1) }}">
+                <button class="btn-start">¡Empezar Juego!</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>&copy; 2024 Juego de Ciberseguridad | Desarrollado por TuNombre</p>
+    </footer>
+
+</body>
+</html>

@@ -45,3 +45,7 @@ La relevancia de estas normas radica en que al tener servidores de juegos online
 Los ataques de phishing son comunes en empresas que manejan información privada, y dado que los jugadores y empleados pueden ser blanco de intentos de phishing (por ejemplo, a través de correos electrónicos falsos relacionados con sus cuentas o juegos), es crucial implementar un sistema robusto de MFA y educar a los empleados y usuarios.
 
 ## Protección de Datos Sensibles
+- Cifrado de datos: Todo dato sensible (información personal de los usuarios, contraseñas, datos bancarios, etc.) debe ser cifrado tanto en tránsito como en reposo utilizando protocolos de cifrado fuertes (por ejemplo, AES-256 para datos en reposo y TLS 1.2 o superior para datos en tránsito).
+- Encriptación de backups: Los backups de datos sensibles deben estar cifrados y almacenados de forma segura. No se deben almacenar copias sin cifrar en ningún sistema, ya sea local o en la nube.
+- Acceso restringido a datos sensibles: Solo el personal autorizado, basado en el principio de menor privilegio, podrá acceder a datos sensibles. El acceso debe ser monitorizado y auditado regularmente.
+- Eliminación segura de datos: Cuando los datos sensibles ya no sean necesarios, deben ser eliminados de forma segura mediante métodos de borrado certificado (por ejemplo, sobreescritura de datos o destrucción física de discos).

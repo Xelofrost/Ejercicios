@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Ciberseguridad</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+
+    <!-- Contenedor principal -->
+    <div class="main-container">
+        <h2>Ronda {{ ronda_actual }} de 10</h2>
+        <p>Selecciona el dominio legítimo:</p>
+
+        <!-- Mostrar las opciones -->
+        <form method="POST">
+            <div class="opciones">
+                {% for opcion in opciones %}
+                    <button type="submit" name="respuesta" value="{{ opcion }}" class="btn-opcion">
+                        {{ opcion }}
+                    </button>
+                {% endfor %}
+            </div>
+        </form>
+
+        {% if resultado %}
+            <div class="resultado">
+                <p>{{ resultado }}</p>
+            </div>
+        {% endif %}
+        
+        <!-- Mostrar puntaje -->
+        <div class="puntaje">
+            <p>Acertaste: {{ puntaje.aciertos }} veces</p>
+            <p>Fallaste: {{ puntaje.fallos }} veces</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluador de Seguridad de Contraseñas</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .progress-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            height: 15px;
+            border-radius: 8px;
+            width: 100%;
+            background-color: #ddd;
+        }
+
+        .progress {
+            height: 100%;
+            text-align: center;
+            line-height: 15px;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+        }
+
+        .weak {
+            background-color: #ff4d4d;
+        }
+
+        .medium {
+            background-color: #ffcc00;
+        }
+
+        .strong {
+            background-color: #66cc66;
+        }
+
+        .very-strong {
+            background-color: #33cc33;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .valid {
+            color: #66cc66;
+        }
+
+        .invalid {
+            color: #ff4d4d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Evaluador de Contraseñas</h1>
+        
+        <!-- Formulario que se envía al escribir la contraseña -->
+        <form method="POST">
+            <div class="input-group">
+                <input type="password" id="password" name="password" value="{{ password }}" placeholder="Introduce tu contraseña" required>
+            </div>
+        </form>
+
+        <!-- Mensaje de seguridad -->
+        <div class="message">
+            <p>{{ result }}</p>
+        </div>
+
+        <!-- Barra de progreso -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress 
+                    {% if score == 0 %}weak
+                    {% elif score == 1 %}weak
+                    {% elif score == 2 %}medium
+                    {% elif score == 3 %}strong
+                    {% elif score == 4 %}very-strong
+                    {% endif %}" style="width: {{ score * 25 }}%;">
+                    {{ score * 25 }}%
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
